@@ -10,12 +10,11 @@ Desenvolvimento de uma API completa, fornecendo recursos como criação, leitura
 
 ## Participantes
 ### 🚀 Capitão
-[NOME e GITHUB]
+Rafael Maia - https://github.com/rafaelmaia23
 
 ### 💂‍♀️ Batalhão
-* [NOME e GITHUB]
-* [NOME e GITHUB]
-* [NOME e GITHUB]
+* Igor Dias - https://github.com/IgorDias1998
+* Matheus André - https://github.com/matheusandre1
 * [NOME e GITHUB]
 
 ## ⚙️ Tecnologias
