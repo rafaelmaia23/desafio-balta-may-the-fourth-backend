@@ -15,5 +15,5 @@ public class Movie
     public List<Character> Characters { get; set; }
     public List<Planet> Planets { get; set; }
     public List<Vehicle> Vehicles { get; set; }
-    public List<Starship> Starships { get; set; }
+    public List<StarShip> Starships { get; set; }
 }

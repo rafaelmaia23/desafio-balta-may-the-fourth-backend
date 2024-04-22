@@ -1,7 +1,10 @@
-﻿namespace MayTheFourthApi.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MayTheFourthApi.Models;
 
 public class StarShip
 {
+    [Key]
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Manufacturer { get; set; } = string.Empty;
@@ -12,7 +15,6 @@ public class StarShip
     public string Passengers {  get; set; } = string.Empty;
     public string CargoCapacity { get; set; } = string.Empty;
     public string HyperDriveRating {  get; set; } = string.Empty;
-
     public string Mglt { get; set; } = string.Empty;
     public string Consumables { get; set; } = string.Empty;
     public string Class { get; set; } = string.Empty;

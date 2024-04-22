@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <Folder Include="Data\" />
-=======
->>>>>>> 5022d6360f9544fbf5dde6ac6f3e01264de92620
     <Folder Include="Services\" />
   </ItemGroup>
 

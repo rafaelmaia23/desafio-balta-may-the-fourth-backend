@@ -1,7 +1,10 @@
-﻿namespace MayTheFourthApi.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MayTheFourthApi.Models;
 
 public class Character
 {
+    [Key]
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Height { get; set; } = string.Empty;

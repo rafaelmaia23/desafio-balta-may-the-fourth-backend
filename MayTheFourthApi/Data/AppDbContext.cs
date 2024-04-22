@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MayTheFourthApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MayTheFourthApi.Data
 {
@@ -8,5 +9,10 @@ namespace MayTheFourthApi.Data
         {
                 
         }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Character> Characters { get; set; }
+        public DbSet<Planet> Planets { get; set; }
+        public DbSet<StarShip> StarShips { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
     }
 }
