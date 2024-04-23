@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<IPlanetService, PlanetService>();
 
 var app = builder.Build();
 
@@ -104,6 +105,46 @@ app.MapPut("/characters/{id}", async (ICharacterService _characterService, int i
     else return Results.NotFound();
 })
     .WithName("UpdateCharacters");
+
+// Endpoints to Planets
+app.MapPost("/planets", async (Planet planet, IPlanetService _planetService) =>
+{
+    if (planet == null) TypedResults.BadRequest();
+    await _planetService.AddPlanet(planet);
+    return Results.Created($"{planet.Id}", planet);
+})
+    .WithName("AddPlanet");
+
+app.MapGet("/planets/{id}", async (IPlanetService _planetService, int id) =>
+{
+    var planet = await _planetService.GetPlanetById(id);
+    if (planet != null) return Results.Ok(planet);
+    else return Results.NotFound();
+})
+    .WithName("GetPlanetById");
+
+app.MapGet("/planets", async (IPlanetService _planetService) =>
+{
+    var planetsList = await _planetService.GetPlanets();
+    return Results.Ok(planetsList);
+})
+    .WithName("GetPlanets");
+
+app.MapDelete("/planets/{id}", async (IPlanetService _planetService, int id) =>
+{
+    var deleteResult = await _planetService.DeletePlanet(id);
+    if (deleteResult) return Results.Ok();
+    else return Results.NotFound();
+})
+    .WithName("DeletePlanet");
+
+app.MapPut("/planets/{id}", async (IPlanetService _planetService, int id, Planet planet) =>
+{
+    var updatedPlanet = await _planetService.UpdatePlanet(id, planet);
+    if (updatedPlanet != null) return Results.Ok(updatedPlanet);
+    else return Results.NotFound();
+})
+    .WithName("UpdatePlanet");
 
 //todo criar dtos, resolver referencia ciclica, tratar errors do crud, implementar crud para outros models, seed da db
 
