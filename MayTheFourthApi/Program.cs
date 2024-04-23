@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<ICharacterService, CharacterService>();
 
 var app = builder.Build();
 
@@ -63,6 +64,46 @@ app.MapPut("/movies/{id}", async (IMovieService _movieService, int id, Movie mov
     else return Results.NotFound();
 })
     .WithName("UpdateMovies");
+
+// Endpoints to Character
+app.MapPost("/characters", async (Character character, ICharacterService _characterService) =>
+{
+    if (character == null) TypedResults.BadRequest();
+    await _characterService.AddCharacter(character);
+    return Results.Created($"{character.Id}", character);
+})
+    .WithName("AddCharacter");
+
+app.MapGet("/characters/{id}", async (ICharacterService _characterService, int id) =>
+{
+    var character = await _characterService.GetCharacterById(id);
+    if (character != null) return Results.Ok(character);
+    else return Results.NotFound();
+})
+    .WithName("GetCharacterById");
+
+app.MapGet("/characters", async (ICharacterService _characterService) =>
+{
+    var charactersList = await _characterService.GetCharacters();
+    return Results.Ok(charactersList);
+})
+    .WithName("GetCharacters");
+
+app.MapDelete("/characters/{id}", async (ICharacterService _characterService, int id) =>
+{
+    var deleteResult = await _characterService.DeleteCharacter(id);
+    if (deleteResult) return Results.Ok();
+    else return Results.NotFound();
+})
+    .WithName("DeleteCharacters");
+
+app.MapPut("/characters/{id}", async (ICharacterService _characterService, int id, Character character) =>
+{
+    var updatedCharacter = await _characterService.UpdateCharacter(id, character);
+    if (updatedCharacter != null) return Results.Ok(updatedCharacter);
+    else return Results.NotFound();
+})
+    .WithName("UpdateCharacters");
 
 //todo criar dtos, resolver referencia ciclica, tratar errors do crud, implementar crud para outros models, seed da db
 

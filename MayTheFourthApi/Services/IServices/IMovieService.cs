@@ -10,4 +10,4 @@ namespace MayTheFourthApi.Services.IServices
         Task<IEnumerable<Movie>> GetMovies();
         Task<Movie> UpdateMovie(int id, Movie movie);
     }
-}
+} 
