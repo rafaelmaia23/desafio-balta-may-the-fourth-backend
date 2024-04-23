@@ -18,6 +18,7 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IPlanetService, PlanetService>();
 builder.Services.AddScoped<IStarShipService, StarShipService>();
+builder.Services.AddScoped<IVehicleService, VehicleService>();
 
 var app = builder.Build();
 
@@ -186,6 +187,47 @@ app.MapPut("/starships/{id}", async (IStarShipService _starShipService, int id, 
     else return Results.NotFound();
 })
     .WithName("UpdateStarShip");
+
+// Endpoints to Vehicle
+app.MapPost("/vehicles", async (Vehicle vehicle, IVehicleService _vehicleService) =>
+{
+    if (vehicle == null) TypedResults.BadRequest();
+    await _vehicleService.AddVehicle(vehicle);
+    return Results.Created($"{vehicle.Id}", vehicle);
+})
+    .WithName("AddVehicle");
+
+app.MapGet("/vehicles/{id}", async (IVehicleService _vehicleService, int id) =>
+{
+    var vehicle = await _vehicleService.GetVehicleById(id);
+    if (vehicle != null) return Results.Ok(vehicle);
+    else return Results.NotFound();
+})
+    .WithName("GetVehicleById");
+
+app.MapGet("/vehicles", async (IVehicleService _vehicleService) =>
+{
+    var vehiclesList = await _vehicleService.GetVehicles();
+    return Results.Ok(vehiclesList);
+})
+    .WithName("GetVehicles");
+
+app.MapDelete("/vehicles/{id}", async (IVehicleService _vehicleService, int id) =>
+{
+    var deleteResult = await _vehicleService.DeleteVehicle(id);
+    if (deleteResult) return Results.Ok();
+    else return Results.NotFound();
+})
+    .WithName("DeleteVehicle");
+
+app.MapPut("/vehicles/{id}", async (IVehicleService _vehicleService, int id, Vehicle vehicle) =>
+{
+    var updatedVehicle = await _vehicleService.UpdateVehicle(id, vehicle);
+    if (updatedVehicle != null) return Results.Ok(updatedVehicle);
+    else return Results.NotFound();
+})
+    .WithName("UpdateVehicle");
+
 
 //todo criar dtos, resolver referencia ciclica, tratar errors do crud, implementar crud para outros models, seed da db
 
