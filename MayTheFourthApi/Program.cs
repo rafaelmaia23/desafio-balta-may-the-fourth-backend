@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IPlanetService, PlanetService>();
+builder.Services.AddScoped<IStarShipService, StarShipService>();
 
 var app = builder.Build();
 
@@ -145,6 +146,46 @@ app.MapPut("/planets/{id}", async (IPlanetService _planetService, int id, Planet
     else return Results.NotFound();
 })
     .WithName("UpdatePlanet");
+
+// Endpoints to StarShip
+app.MapPost("/starships", async (StarShip starShip, IStarShipService _starShipService) =>
+{
+    if (starShip == null) TypedResults.BadRequest();
+    await _starShipService.AddStarShip(starShip);
+    return Results.Created($"{starShip.Id}", starShip);
+})
+    .WithName("AddStarShip");
+
+app.MapGet("/starships/{id}", async (IStarShipService _starShipService, int id) =>
+{
+    var starShip = await _starShipService.GetStarShipById(id);
+    if (starShip != null) return Results.Ok(starShip);
+    else return Results.NotFound();
+})
+    .WithName("GetStarShipById");
+
+app.MapGet("/starships", async (IStarShipService _starShipService) =>
+{
+    var starShipsList = await _starShipService.GetStarShips();
+    return Results.Ok(starShipsList);
+})
+    .WithName("GetStarShips");
+
+app.MapDelete("/starships/{id}", async (IStarShipService _starShipService, int id) =>
+{
+    var deleteResult = await _starShipService.DeleteStarShip(id);
+    if (deleteResult) return Results.Ok();
+    else return Results.NotFound();
+})
+    .WithName("DeleteStarShip");
+
+app.MapPut("/starships/{id}", async (IStarShipService _starShipService, int id, StarShip starShip) =>
+{
+    var updatedStarShip = await _starShipService.UpdateStarShip(id, starShip);
+    if (updatedStarShip != null) return Results.Ok(updatedStarShip);
+    else return Results.NotFound();
+})
+    .WithName("UpdateStarShip");
 
 //todo criar dtos, resolver referencia ciclica, tratar errors do crud, implementar crud para outros models, seed da db
 
