@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MayTheFourthApi.Services
 {
-    public class StarShipService : IStarShipService
+    public class StarShipService : IService<StarShip>
     {
         private AppDbContext _db;
 
@@ -13,33 +13,23 @@ namespace MayTheFourthApi.Services
         {
             _db = db;
         }
-        public async Task AddStarShip(StarShip starShip)
+        public async Task AddRegister(StarShip starShip)
         {
             await _db.StarShips.AddAsync(starShip);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteStarShip(int id)
-        {
-            var starShip = await _db.StarShips.FirstOrDefaultAsync(x => x.Id == id);
-            if (starShip == null) return false;
-
-            _db.StarShips.Remove(starShip);
-            await _db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<StarShip?> GetStarShipById(int id)
-        {
-            return await _db.StarShips.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task<IEnumerable<StarShip>> GetStarShips()
+        public async Task<IEnumerable<StarShip>> GetRegisters()
         {
             return _db.StarShips;
         }
 
-        public async Task<StarShip> UpdateStarShip(int id, StarShip starShip)
+        public async Task<StarShip?> GetRegisterById(int id)
+        {
+            return await _db.StarShips.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<StarShip> UpdateRegister(int id, StarShip starShip)
         {
             var starShipToBeUpdated = await _db.StarShips.FirstOrDefaultAsync(x => x.Id == id);
             if (starShipToBeUpdated == null) return null;
@@ -61,6 +51,16 @@ namespace MayTheFourthApi.Services
             await _db.SaveChangesAsync();
 
             return starShipToBeUpdated;
+        }
+
+        public async Task<bool> DeleteRegister(int id)
+        {
+            var starShip = await _db.StarShips.FirstOrDefaultAsync(x => x.Id == id);
+            if (starShip == null) return false;
+
+            _db.StarShips.Remove(starShip);
+            await _db.SaveChangesAsync();
+            return true;
         }
     }
 }
