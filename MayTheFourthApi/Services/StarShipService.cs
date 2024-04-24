@@ -23,12 +23,10 @@ namespace MayTheFourthApi.Services
         {
             var starShip = await _db.StarShips.FirstOrDefaultAsync(x => x.Id == id);
             if (starShip == null) return false;
-            else
-            {
-                _db.StarShips.Remove(starShip);
-                await _db.SaveChangesAsync();
-                return true;
-            }
+
+            _db.StarShips.Remove(starShip);
+            await _db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<StarShip?> GetStarShipById(int id)
@@ -43,27 +41,26 @@ namespace MayTheFourthApi.Services
 
         public async Task<StarShip> UpdateStarShip(int id, StarShip starShip)
         {
-            var starShipToBeUpdated = await _db.StarShips.FirstOrDefaultAsync(x =>x.Id == id);
+            var starShipToBeUpdated = await _db.StarShips.FirstOrDefaultAsync(x => x.Id == id);
             if (starShipToBeUpdated == null) return null;
-            else
-            {
-                starShipToBeUpdated.Name = starShip.Name;
-                starShipToBeUpdated.Manufacturer = starShip.Manufacturer;
-                starShipToBeUpdated.CostInCredits = starShip.CostInCredits;
-                starShipToBeUpdated.Length = starShip.Length;
-                starShipToBeUpdated.MaxSpeed = starShip.MaxSpeed;
-                starShipToBeUpdated.Crew = starShip.Crew;
-                starShipToBeUpdated.Passengers = starShip.Passengers;
-                starShipToBeUpdated.CargoCapacity = starShip.CargoCapacity;
-                starShipToBeUpdated.HyperDriveRating = starShip.HyperDriveRating;
-                starShipToBeUpdated.Mglt = starShip.Mglt;
-                starShipToBeUpdated.Consumables = starShip.Consumables;
-                starShipToBeUpdated.Class = starShip.Class;
 
-                _db.StarShips.Update(starShipToBeUpdated);
-                await _db.SaveChangesAsync();
-                return starShipToBeUpdated;
-            }
+            starShipToBeUpdated.Name = starShip.Name;
+            starShipToBeUpdated.Manufacturer = starShip.Manufacturer;
+            starShipToBeUpdated.CostInCredits = starShip.CostInCredits;
+            starShipToBeUpdated.Length = starShip.Length;
+            starShipToBeUpdated.MaxSpeed = starShip.MaxSpeed;
+            starShipToBeUpdated.Crew = starShip.Crew;
+            starShipToBeUpdated.Passengers = starShip.Passengers;
+            starShipToBeUpdated.CargoCapacity = starShip.CargoCapacity;
+            starShipToBeUpdated.HyperDriveRating = starShip.HyperDriveRating;
+            starShipToBeUpdated.Mglt = starShip.Mglt;
+            starShipToBeUpdated.Consumables = starShip.Consumables;
+            starShipToBeUpdated.Class = starShip.Class;
+
+            _db.StarShips.Update(starShipToBeUpdated);
+            await _db.SaveChangesAsync();
+
+            return starShipToBeUpdated;
         }
     }
 }

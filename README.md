@@ -15,7 +15,7 @@ Rafael Maia - https://github.com/rafaelmaia23
 ### 💂‍♀️ Batalhão
 * Igor Dias - https://github.com/IgorDias1998
 * Matheus André - https://github.com/matheusandre1
-* [NOME e GITHUB]
+* Ygor Evaldt - https://github.com/Ygor-Evaldt-dev
 
 ## ⚙️ Tecnologias
 * C# 12

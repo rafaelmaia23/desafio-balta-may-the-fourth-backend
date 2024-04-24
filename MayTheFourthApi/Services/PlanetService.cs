@@ -24,12 +24,10 @@ namespace MayTheFourthApi.Services
         {
             var planet = await _db.Planets.FirstOrDefaultAsync(x => x.Id == id);
             if (planet == null) return false;
-            else
-            {
-                _db.Planets.Remove(planet);
-                await _db.SaveChangesAsync();
-                return true;
-            }
+
+            _db.Planets.Remove(planet);
+            await _db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<Planet?> GetPlanetById(int id)
@@ -46,22 +44,20 @@ namespace MayTheFourthApi.Services
         {
             var planetToBeUpdated = await _db.Planets.FirstOrDefaultAsync(x => x.Id == id);
             if (planetToBeUpdated == null) return null;
-            else
-            {
-                planetToBeUpdated.Name = planet.Name;
-                planetToBeUpdated.RotationPeriod = planet.RotationPeriod;
-                planetToBeUpdated.OrbitalPeriod = planet.OrbitalPeriod;
-                planetToBeUpdated.Diameter = planet.Diameter;
-                planetToBeUpdated.Climate = planet.Climate;
-                planetToBeUpdated.Gravity = planet.Gravity;
-                planetToBeUpdated.Terrain = planet.Terrain;
-                planetToBeUpdated.SurfaceWater = planet.SurfaceWater;
-                planetToBeUpdated.Population = planet.Population;
 
-                _db.Planets.Update(planetToBeUpdated);
-                await _db.SaveChangesAsync();
-                return planetToBeUpdated;
-            }
+            planetToBeUpdated.Name = planet.Name;
+            planetToBeUpdated.RotationPeriod = planet.RotationPeriod;
+            planetToBeUpdated.OrbitalPeriod = planet.OrbitalPeriod;
+            planetToBeUpdated.Diameter = planet.Diameter;
+            planetToBeUpdated.Climate = planet.Climate;
+            planetToBeUpdated.Gravity = planet.Gravity;
+            planetToBeUpdated.Terrain = planet.Terrain;
+            planetToBeUpdated.SurfaceWater = planet.SurfaceWater;
+            planetToBeUpdated.Population = planet.Population;
+
+            _db.Planets.Update(planetToBeUpdated);
+            await _db.SaveChangesAsync();
+            return planetToBeUpdated;
         }
     }
 }

@@ -25,9 +25,10 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+// Endpoints to Movies
 app.MapPost("/movies", async (Movie movie, IMovieService _movieService) =>
 {
-    if(movie == null) TypedResults.BadRequest();
+    if (movie == null) TypedResults.BadRequest();
     await _movieService.AddMovie(movie);
     return Results.Created($"{movie.Id}", movie);
 })
@@ -35,10 +36,10 @@ app.MapPost("/movies", async (Movie movie, IMovieService _movieService) =>
 
 app.MapGet("/movies/{id}", async (IMovieService _movieService, int id) =>
 {
-    
+
     var movie = await _movieService.GetMovieById(id);
-    if(movie != null) return Results.Ok(movie);
-    else return Results.NotFound();
+    if (movie != null) return Results.Ok(movie);
+    return Results.NotFound();
 })
     .WithName("GetMovieById");
 
@@ -55,7 +56,7 @@ app.MapDelete("/movies/{id}", async (IMovieService _movieService, int id) =>
 
     var deleteResult = await _movieService.DeleteMovie(id);
     if (deleteResult) return Results.Ok();
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("DeleteMovies");
 
@@ -64,7 +65,7 @@ app.MapPut("/movies/{id}", async (IMovieService _movieService, int id, Movie mov
 
     var updatedMovie = await _movieService.UpdateMovie(id, movie);
     if (updatedMovie != null) return Results.Ok(updatedMovie);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("UpdateMovies");
 
@@ -81,7 +82,7 @@ app.MapGet("/characters/{id}", async (ICharacterService _characterService, int i
 {
     var character = await _characterService.GetCharacterById(id);
     if (character != null) return Results.Ok(character);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("GetCharacterById");
 
@@ -96,7 +97,7 @@ app.MapDelete("/characters/{id}", async (ICharacterService _characterService, in
 {
     var deleteResult = await _characterService.DeleteCharacter(id);
     if (deleteResult) return Results.Ok();
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("DeleteCharacters");
 
@@ -104,7 +105,7 @@ app.MapPut("/characters/{id}", async (ICharacterService _characterService, int i
 {
     var updatedCharacter = await _characterService.UpdateCharacter(id, character);
     if (updatedCharacter != null) return Results.Ok(updatedCharacter);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("UpdateCharacters");
 
@@ -121,7 +122,7 @@ app.MapGet("/planets/{id}", async (IPlanetService _planetService, int id) =>
 {
     var planet = await _planetService.GetPlanetById(id);
     if (planet != null) return Results.Ok(planet);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("GetPlanetById");
 
@@ -136,7 +137,7 @@ app.MapDelete("/planets/{id}", async (IPlanetService _planetService, int id) =>
 {
     var deleteResult = await _planetService.DeletePlanet(id);
     if (deleteResult) return Results.Ok();
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("DeletePlanet");
 
@@ -144,7 +145,7 @@ app.MapPut("/planets/{id}", async (IPlanetService _planetService, int id, Planet
 {
     var updatedPlanet = await _planetService.UpdatePlanet(id, planet);
     if (updatedPlanet != null) return Results.Ok(updatedPlanet);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("UpdatePlanet");
 
@@ -161,7 +162,7 @@ app.MapGet("/starships/{id}", async (IStarShipService _starShipService, int id) 
 {
     var starShip = await _starShipService.GetStarShipById(id);
     if (starShip != null) return Results.Ok(starShip);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("GetStarShipById");
 
@@ -176,7 +177,7 @@ app.MapDelete("/starships/{id}", async (IStarShipService _starShipService, int i
 {
     var deleteResult = await _starShipService.DeleteStarShip(id);
     if (deleteResult) return Results.Ok();
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("DeleteStarShip");
 
@@ -184,7 +185,7 @@ app.MapPut("/starships/{id}", async (IStarShipService _starShipService, int id, 
 {
     var updatedStarShip = await _starShipService.UpdateStarShip(id, starShip);
     if (updatedStarShip != null) return Results.Ok(updatedStarShip);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("UpdateStarShip");
 
@@ -201,7 +202,7 @@ app.MapGet("/vehicles/{id}", async (IVehicleService _vehicleService, int id) =>
 {
     var vehicle = await _vehicleService.GetVehicleById(id);
     if (vehicle != null) return Results.Ok(vehicle);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("GetVehicleById");
 
@@ -216,7 +217,7 @@ app.MapDelete("/vehicles/{id}", async (IVehicleService _vehicleService, int id) 
 {
     var deleteResult = await _vehicleService.DeleteVehicle(id);
     if (deleteResult) return Results.Ok();
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("DeleteVehicle");
 
@@ -224,7 +225,7 @@ app.MapPut("/vehicles/{id}", async (IVehicleService _vehicleService, int id, Veh
 {
     var updatedVehicle = await _vehicleService.UpdateVehicle(id, vehicle);
     if (updatedVehicle != null) return Results.Ok(updatedVehicle);
-    else return Results.NotFound();
+    return Results.NotFound();
 })
     .WithName("UpdateVehicle");
 
