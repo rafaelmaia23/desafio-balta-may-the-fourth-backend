@@ -33,5 +33,12 @@ app.MapVehicleRoutes();
 
 app.Run();
 
-//todo criar dtos, resolver referencia ciclica, tratar errors do crud, implementar crud para outros models, seed da db
+/*
+- TO DO
+    - [] Criar dtos;
+    - [] Resolver referencia ciclica;
+    - [] Tratar errors do crud;
+    - [] Implementar crud para outros models;
+    - [] Seed da db;
+*/
 
