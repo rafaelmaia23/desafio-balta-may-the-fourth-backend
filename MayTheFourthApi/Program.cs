@@ -1,7 +1,6 @@
 using MayTheFourthApi.Data;
 using MayTheFourthApi.Models;
 using MayTheFourthApi.Services;
-using MayTheFourthApi.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

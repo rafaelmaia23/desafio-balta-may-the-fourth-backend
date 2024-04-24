@@ -1,6 +1,6 @@
 using MayTheFourthApi.Models;
 
-namespace MayTheFourthApi.Services.IServices
+namespace MayTheFourthApi.Services
 {
     public interface IService<T>
     {
