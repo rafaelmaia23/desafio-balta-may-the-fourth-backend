@@ -14,11 +14,11 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IMovieService, MovieService>();
-builder.Services.AddScoped<ICharacterService, CharacterService>();
-builder.Services.AddScoped<IPlanetService, PlanetService>();
-builder.Services.AddScoped<IStarShipService, StarShipService>();
-builder.Services.AddScoped<IVehicleService, VehicleService>();
+builder.Services.AddScoped<IService<Movie>, MovieService>();
+builder.Services.AddScoped<IService<Character>, CharacterService>();
+builder.Services.AddScoped<IService<Planet>, PlanetService>();
+builder.Services.AddScoped<IService<StarShip>, StarShipService>();
+builder.Services.AddScoped<IService<Vehicle>, VehicleService>();
 
 var app = builder.Build();
 
