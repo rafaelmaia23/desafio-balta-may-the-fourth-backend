@@ -1,6 +1,5 @@
 ﻿using MayTheFourthApi.Data;
 using MayTheFourthApi.Models;
-using MayTheFourthApi.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace MayTheFourthApi.Services
