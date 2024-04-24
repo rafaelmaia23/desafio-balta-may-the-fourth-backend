@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MayTheFourthApi.Services
 {
-    public class CharacterService : ICharacterService
+    public class CharacterService : IService<Character>
     {
         private AppDbContext _db;
 
@@ -14,13 +14,13 @@ namespace MayTheFourthApi.Services
             _db = db;
         }
 
-        public async Task AddCharacter(Character character)
+        public async Task AddRegister(Character character)
         {
             await _db.Characters.AddAsync(character);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteCharacter(int id)
+        public async Task<bool> DeleteRegister(int id)
         {
             var character = await _db.Characters.FirstOrDefaultAsync(x => x.Id == id); ;
             if (character == null) return false;
@@ -30,17 +30,17 @@ namespace MayTheFourthApi.Services
             return true;
         }
 
-        public async Task<Character?> GetCharacterById(int id)
+        public async Task<Character?> GetRegisterById(int id)
         {
             return await _db.Characters.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<Character>> GetCharacters()
+        public async Task<IEnumerable<Character>> GetRegisters()
         {
             return _db.Characters;
         }
 
-        public async Task<Character> UpdateCharacter(int id, Character character)
+        public async Task<Character> UpdateRegister(int id, Character character)
         {
             var characterToBeUpdated = await _db.Characters.FirstOrDefaultAsync(x => x.Id == id);
             if (characterToBeUpdated == null) return null;
@@ -56,6 +56,7 @@ namespace MayTheFourthApi.Services
 
             _db.Characters.Update(characterToBeUpdated);
             await _db.SaveChangesAsync();
+
             return characterToBeUpdated;
         }
     }

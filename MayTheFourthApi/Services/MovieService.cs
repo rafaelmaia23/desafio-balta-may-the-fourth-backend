@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MayTheFourthApi.Services
 {
-    public class MovieService : IMovieService
+    public class MovieService : IService<Movie>
     {
         private AppDbContext _db;
 
@@ -14,13 +14,13 @@ namespace MayTheFourthApi.Services
             _db = db;
         }
 
-        public async Task AddMovie(Movie movie)
+        public async Task AddRegister(Movie movie)
         {
             await _db.Movies.AddAsync(movie);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteMovie(int id)
+        public async Task<bool> DeleteRegister(int id)
         {
             var movie = await _db.Movies.FirstOrDefaultAsync(x => x.Id == id);
             if (movie == null) return false;
@@ -30,17 +30,17 @@ namespace MayTheFourthApi.Services
             return true;
         }
 
-        public async Task<Movie?> GetMovieById(int id)
+        public async Task<Movie?> GetRegisterById(int id)
         {
             return await _db.Movies.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<Movie>> GetMovies()
+        public async Task<IEnumerable<Movie>> GetRegisters()
         {
             return _db.Movies;
         }
 
-        public async Task<Movie> UpdateMovie(int id, Movie movie)
+        public async Task<Movie> UpdateRegister(int id, Movie movie)
         {
             var movieToBeUpdated = await _db.Movies.FirstOrDefaultAsync(x => x.Id == id);
             if (movieToBeUpdated == null) return null;
@@ -54,6 +54,7 @@ namespace MayTheFourthApi.Services
 
             _db.Movies.Update(movieToBeUpdated);
             await _db.SaveChangesAsync();
+
             return movieToBeUpdated;
         }
     }
