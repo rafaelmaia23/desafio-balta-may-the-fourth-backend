@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MayTheFourthApi.Services
 {
-    public class VehicleService : IVehicleService
+    public class VehicleService : IService<Vehicle>
     {
         private AppDbContext _db;
         public VehicleService(AppDbContext db)
@@ -13,33 +13,23 @@ namespace MayTheFourthApi.Services
             _db = db;
         }
 
-        public async Task AddVehicle(Vehicle vehicle)
+        public async Task AddRegister(Vehicle vehicle)
         {
             await _db.Vehicles.AddAsync(vehicle);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteVehicle(int id)
-        {
-            var vehicle = await _db.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
-            if (vehicle == null) return false;
-
-            _db.Vehicles.Remove(vehicle);
-            await _db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<Vehicle?> GetVehicleById(int id)
-        {
-            return await _db.Vehicles.FirstAsync(x => x.Id == id);
-        }
-
-        public async Task<IEnumerable<Vehicle>> GetVehicles()
+        public async Task<IEnumerable<Vehicle>> GetRegisters()
         {
             return _db.Vehicles;
         }
 
-        public async Task<Vehicle> UpdateVehicle(int id, Vehicle vehicle)
+        public async Task<Vehicle?> GetRegisterById(int id)
+        {
+            return await _db.Vehicles.FirstAsync(x => x.Id == id);
+        }
+
+        public async Task<Vehicle> UpdateRegister(int id, Vehicle vehicle)
         {
             var vehicleToBeUpdated = await _db.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
             if (vehicleToBeUpdated == null) return null;
@@ -59,6 +49,16 @@ namespace MayTheFourthApi.Services
             _db.Vehicles.Update(vehicleToBeUpdated);
             await _db.SaveChangesAsync();
             return vehicleToBeUpdated;
+        }
+
+        public async Task<bool> DeleteRegister(int id)
+        {
+            var vehicle = await _db.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
+            if (vehicle == null) return false;
+
+            _db.Vehicles.Remove(vehicle);
+            await _db.SaveChangesAsync();
+            return true;
         }
     }
 }
