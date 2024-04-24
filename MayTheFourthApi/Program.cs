@@ -26,208 +26,209 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 // Endpoints to Movies
-app.MapPost("/movies", async (Movie movie, IMovieService _movieService) =>
+app.MapPost("/movies", async (Movie movie, IService<Movie> _movieService) =>
 {
     if (movie == null) TypedResults.BadRequest();
-    await _movieService.AddMovie(movie);
+    await _movieService.AddRegister(movie);
     return Results.Created($"{movie.Id}", movie);
 })
     .WithName("AddMovie");
 
-app.MapGet("/movies/{id}", async (IMovieService _movieService, int id) =>
+app.MapGet("/movies", async (IService<Movie> _movieService) =>
 {
 
-    var movie = await _movieService.GetMovieById(id);
+    var moviesList = await _movieService.GetRegisters();
+    return Results.Ok(moviesList);
+})
+    .WithName("GetMovies");
+
+app.MapGet("/movies/{id}", async (IService<Movie> _movieService, int id) =>
+{
+
+    var movie = await _movieService.GetRegisterById(id);
     if (movie != null) return Results.Ok(movie);
     return Results.NotFound();
 })
     .WithName("GetMovieById");
 
-app.MapGet("/movies", async (IMovieService _movieService) =>
+app.MapPut("/movies/{id}", async (IService<Movie> _movieService, int id, Movie movie) =>
 {
 
-    var moviesList = await _movieService.GetMovies();
-    return Results.Ok(moviesList);
-})
-    .WithName("GetMovies");
-
-app.MapDelete("/movies/{id}", async (IMovieService _movieService, int id) =>
-{
-
-    var deleteResult = await _movieService.DeleteMovie(id);
-    if (deleteResult) return Results.Ok();
-    return Results.NotFound();
-})
-    .WithName("DeleteMovies");
-
-app.MapPut("/movies/{id}", async (IMovieService _movieService, int id, Movie movie) =>
-{
-
-    var updatedMovie = await _movieService.UpdateMovie(id, movie);
+    var updatedMovie = await _movieService.UpdateRegister(id, movie);
     if (updatedMovie != null) return Results.Ok(updatedMovie);
     return Results.NotFound();
 })
     .WithName("UpdateMovies");
 
+
+app.MapDelete("/movies/{id}", async (IService<Movie> _movieService, int id) =>
+{
+
+    var deleteResult = await _movieService.DeleteRegister(id);
+    if (deleteResult) return Results.Ok();
+    return Results.NotFound();
+})
+    .WithName("DeleteMovies");
+
 // Endpoints to Character
-app.MapPost("/characters", async (Character character, ICharacterService _characterService) =>
+app.MapPost("/characters", async (Character character, IService<Character> _characterService) =>
 {
     if (character == null) TypedResults.BadRequest();
-    await _characterService.AddCharacter(character);
+    await _characterService.AddRegister(character);
     return Results.Created($"{character.Id}", character);
 })
     .WithName("AddCharacter");
 
-app.MapGet("/characters/{id}", async (ICharacterService _characterService, int id) =>
+app.MapGet("/characters", async (IService<Character> _characterService) =>
 {
-    var character = await _characterService.GetCharacterById(id);
+    var charactersList = await _characterService.GetRegisters();
+    return Results.Ok(charactersList);
+})
+    .WithName("GetCharacters");
+
+app.MapGet("/characters/{id}", async (IService<Character> _characterService, int id) =>
+{
+    var character = await _characterService.GetRegisterById(id);
     if (character != null) return Results.Ok(character);
     return Results.NotFound();
 })
     .WithName("GetCharacterById");
 
-app.MapGet("/characters", async (ICharacterService _characterService) =>
+app.MapPut("/characters/{id}", async (IService<Character> _characterService, int id, Character character) =>
 {
-    var charactersList = await _characterService.GetCharacters();
-    return Results.Ok(charactersList);
-})
-    .WithName("GetCharacters");
-
-app.MapDelete("/characters/{id}", async (ICharacterService _characterService, int id) =>
-{
-    var deleteResult = await _characterService.DeleteCharacter(id);
-    if (deleteResult) return Results.Ok();
-    return Results.NotFound();
-})
-    .WithName("DeleteCharacters");
-
-app.MapPut("/characters/{id}", async (ICharacterService _characterService, int id, Character character) =>
-{
-    var updatedCharacter = await _characterService.UpdateCharacter(id, character);
+    var updatedCharacter = await _characterService.UpdateRegister(id, character);
     if (updatedCharacter != null) return Results.Ok(updatedCharacter);
     return Results.NotFound();
 })
     .WithName("UpdateCharacters");
 
+app.MapDelete("/characters/{id}", async (IService<Character> _characterService, int id) =>
+{
+    var deleteResult = await _characterService.DeleteRegister(id);
+    if (deleteResult) return Results.Ok();
+    return Results.NotFound();
+})
+    .WithName("DeleteCharacters");
+
 // Endpoints to Planets
-app.MapPost("/planets", async (Planet planet, IPlanetService _planetService) =>
+app.MapPost("/planets", async (Planet planet, IService<Planet> _planetService) =>
 {
     if (planet == null) TypedResults.BadRequest();
-    await _planetService.AddPlanet(planet);
+    await _planetService.AddRegister(planet);
     return Results.Created($"{planet.Id}", planet);
 })
     .WithName("AddPlanet");
 
-app.MapGet("/planets/{id}", async (IPlanetService _planetService, int id) =>
+app.MapGet("/planets", async (IService<Planet> _planetService) =>
 {
-    var planet = await _planetService.GetPlanetById(id);
+    var planetsList = await _planetService.GetRegisters();
+    return Results.Ok(planetsList);
+})
+    .WithName("GetPlanets");
+
+app.MapGet("/planets/{id}", async (IService<Planet> _planetService, int id) =>
+{
+    var planet = await _planetService.GetRegisterById(id);
     if (planet != null) return Results.Ok(planet);
     return Results.NotFound();
 })
     .WithName("GetPlanetById");
 
-app.MapGet("/planets", async (IPlanetService _planetService) =>
+app.MapPut("/planets/{id}", async (IService<Planet> _planetService, int id, Planet planet) =>
 {
-    var planetsList = await _planetService.GetPlanets();
-    return Results.Ok(planetsList);
-})
-    .WithName("GetPlanets");
-
-app.MapDelete("/planets/{id}", async (IPlanetService _planetService, int id) =>
-{
-    var deleteResult = await _planetService.DeletePlanet(id);
-    if (deleteResult) return Results.Ok();
-    return Results.NotFound();
-})
-    .WithName("DeletePlanet");
-
-app.MapPut("/planets/{id}", async (IPlanetService _planetService, int id, Planet planet) =>
-{
-    var updatedPlanet = await _planetService.UpdatePlanet(id, planet);
+    var updatedPlanet = await _planetService.UpdateRegister(id, planet);
     if (updatedPlanet != null) return Results.Ok(updatedPlanet);
     return Results.NotFound();
 })
     .WithName("UpdatePlanet");
 
+app.MapDelete("/planets/{id}", async (IService<Planet> _planetService, int id) =>
+{
+    var deleteResult = await _planetService.DeleteRegister(id);
+    if (deleteResult) return Results.Ok();
+    return Results.NotFound();
+})
+    .WithName("DeletePlanet");
+
 // Endpoints to StarShip
-app.MapPost("/starships", async (StarShip starShip, IStarShipService _starShipService) =>
+app.MapPost("/starships", async (StarShip starShip, IService<StarShip> _starShipService) =>
 {
     if (starShip == null) TypedResults.BadRequest();
-    await _starShipService.AddStarShip(starShip);
+    await _starShipService.AddRegister(starShip);
     return Results.Created($"{starShip.Id}", starShip);
 })
     .WithName("AddStarShip");
 
-app.MapGet("/starships/{id}", async (IStarShipService _starShipService, int id) =>
+app.MapGet("/starships", async (IService<StarShip> _starShipService) =>
 {
-    var starShip = await _starShipService.GetStarShipById(id);
+    var starShipsList = await _starShipService.GetRegisters();
+    return Results.Ok(starShipsList);
+})
+    .WithName("GetStarShips");
+
+app.MapGet("/starships/{id}", async (IService<StarShip> _starShipService, int id) =>
+{
+    var starShip = await _starShipService.GetRegisterById(id);
     if (starShip != null) return Results.Ok(starShip);
     return Results.NotFound();
 })
     .WithName("GetStarShipById");
 
-app.MapGet("/starships", async (IStarShipService _starShipService) =>
+app.MapPut("/starships/{id}", async (IService<StarShip> _starShipService, int id, StarShip starShip) =>
 {
-    var starShipsList = await _starShipService.GetStarShips();
-    return Results.Ok(starShipsList);
-})
-    .WithName("GetStarShips");
-
-app.MapDelete("/starships/{id}", async (IStarShipService _starShipService, int id) =>
-{
-    var deleteResult = await _starShipService.DeleteStarShip(id);
-    if (deleteResult) return Results.Ok();
-    return Results.NotFound();
-})
-    .WithName("DeleteStarShip");
-
-app.MapPut("/starships/{id}", async (IStarShipService _starShipService, int id, StarShip starShip) =>
-{
-    var updatedStarShip = await _starShipService.UpdateStarShip(id, starShip);
+    var updatedStarShip = await _starShipService.UpdateRegister(id, starShip);
     if (updatedStarShip != null) return Results.Ok(updatedStarShip);
     return Results.NotFound();
 })
     .WithName("UpdateStarShip");
 
+app.MapDelete("/starships/{id}", async (IService<StarShip> _starShipService, int id) =>
+{
+    var deleteResult = await _starShipService.DeleteRegister(id);
+    if (deleteResult) return Results.Ok();
+    return Results.NotFound();
+})
+    .WithName("DeleteStarShip");
+
 // Endpoints to Vehicle
-app.MapPost("/vehicles", async (Vehicle vehicle, IVehicleService _vehicleService) =>
+app.MapPost("/vehicles", async (Vehicle vehicle, IService<Vehicle> _vehicleService) =>
 {
     if (vehicle == null) TypedResults.BadRequest();
-    await _vehicleService.AddVehicle(vehicle);
+    await _vehicleService.AddRegister(vehicle);
     return Results.Created($"{vehicle.Id}", vehicle);
 })
     .WithName("AddVehicle");
 
-app.MapGet("/vehicles/{id}", async (IVehicleService _vehicleService, int id) =>
+app.MapGet("/vehicles", async (IService<Vehicle> _vehicleService) =>
 {
-    var vehicle = await _vehicleService.GetVehicleById(id);
+    var vehiclesList = await _vehicleService.GetRegisters();
+    return Results.Ok(vehiclesList);
+})
+    .WithName("GetVehicles");
+
+app.MapGet("/vehicles/{id}", async (IService<Vehicle> _vehicleService, int id) =>
+{
+    var vehicle = await _vehicleService.GetRegisterById(id);
     if (vehicle != null) return Results.Ok(vehicle);
     return Results.NotFound();
 })
     .WithName("GetVehicleById");
 
-app.MapGet("/vehicles", async (IVehicleService _vehicleService) =>
+app.MapPut("/vehicles/{id}", async (IService<Vehicle> _vehicleService, int id, Vehicle vehicle) =>
 {
-    var vehiclesList = await _vehicleService.GetVehicles();
-    return Results.Ok(vehiclesList);
-})
-    .WithName("GetVehicles");
-
-app.MapDelete("/vehicles/{id}", async (IVehicleService _vehicleService, int id) =>
-{
-    var deleteResult = await _vehicleService.DeleteVehicle(id);
-    if (deleteResult) return Results.Ok();
-    return Results.NotFound();
-})
-    .WithName("DeleteVehicle");
-
-app.MapPut("/vehicles/{id}", async (IVehicleService _vehicleService, int id, Vehicle vehicle) =>
-{
-    var updatedVehicle = await _vehicleService.UpdateVehicle(id, vehicle);
+    var updatedVehicle = await _vehicleService.UpdateRegister(id, vehicle);
     if (updatedVehicle != null) return Results.Ok(updatedVehicle);
     return Results.NotFound();
 })
     .WithName("UpdateVehicle");
+
+app.MapDelete("/vehicles/{id}", async (IService<Vehicle> _vehicleService, int id) =>
+{
+    var deleteResult = await _vehicleService.DeleteRegister(id);
+    if (deleteResult) return Results.Ok();
+    return Results.NotFound();
+})
+    .WithName("DeleteVehicle");
 
 
 //todo criar dtos, resolver referencia ciclica, tratar errors do crud, implementar crud para outros models, seed da db
